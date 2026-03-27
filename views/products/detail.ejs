@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <h1>Product Management System</h1>
+        <a href="/" class="nav-link">Home</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="detail-container">
+        <h2>Product Details</h2>
+
+        <div class="product-detail">
+          <% if (product.url_image) { %>
+          <div class="detail-image">
+            <img src="<%= product.url_image %>" alt="<%= product.name %>" />
+          </div>
+          <% } %>
+
+          <div class="detail-info">
+            <div class="info-row">
+              <label>Product ID:</label>
+              <span><%= product.id %></span>
+            </div>
+
+            <div class="info-row">
+              <label>Name:</label>
+              <span><%= product.name %></span>
+            </div>
+
+            <div class="info-row">
+              <label>Price:</label>
+              <span class="price">$<%= product.price.toFixed(2) %></span>
+            </div>
+
+            <div class="info-row">
+              <label>Units in Stock:</label>
+              <span
+                class="<%= product.unit_in_stock > 0 ? 'stock-available' : 'stock-out' %>"
+              >
+                <%= product.unit_in_stock %>
+              </span>
+            </div>
+
+            <% if (product.created_at) { %>
+            <div class="info-row">
+              <label>Created At:</label>
+              <span><%= new Date(product.created_at).toLocaleString() %></span>
+            </div>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <a href="/<%= product.id %>/edit" class="btn btn-warning"
+            >Edit Product</a
+          >
+          <form
+            action="/<%= product.id %>/delete"
+            method="POST"
+            style="display: inline"
+            onsubmit="return confirm('Are you sure you want to delete this product?')"
+          >
+            <button type="submit" class="btn btn-danger">Delete Product</button>
+          </form>
+          <a href="/" class="btn btn-secondary">Back to List</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Product Management System</p>
+    </footer>
+  </body>
+</html>

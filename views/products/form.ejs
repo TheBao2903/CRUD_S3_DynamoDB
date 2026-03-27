@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= product ? 'Edit Product' : 'Add Product' %></title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <h1>Product Management System</h1>
+        <a href="/" class="nav-link">Home</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="form-container">
+        <h2><%= product ? 'Edit Product' : 'Add New Product' %></h2>
+
+        <% if (message) { %>
+        <div class="alert alert-error"><%= message %></div>
+        <% } %>
+
+        <form
+          action="<%= product ? '/' + product.id + '/edit' : '/create' %>"
+          method="POST"
+          enctype="multipart/form-data"
+          class="product-form"
+        >
+          <div class="form-group">
+            <label for="name">Product Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="<%= product ? product.name : '' %>"
+              required
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price *</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              step="0.01"
+              min="0"
+              value="<%= product ? product.price : '' %>"
+              required
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="unit_in_stock">Units in Stock *</label>
+            <input
+              type="number"
+              id="unit_in_stock"
+              name="unit_in_stock"
+              min="0"
+              value="<%= product ? product.unit_in_stock : '' %>"
+              required
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="image">Product Image</label>
+            <% if (product && product.url_image) { %>
+            <div class="current-image">
+              <img src="<%= product.url_image %>" alt="Current product image" />
+              <p>Current image (upload new to replace)</p>
+            </div>
+            <% } %>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <%= product ? 'Update Product' : 'Create Product' %>
+            </button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Product Management System</p>
+    </footer>
+  </body>
+</html>
